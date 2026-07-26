@@ -10,12 +10,14 @@ const AboutUSPage = () => {
   return (
     <main id="about-us" className="container my-10">
       <SectionTitle text="ما کی هستیم؟" description={LOREM_TEXT} />
+
       <div className="w-full mt-10 gap-10 grid grid-cols-2">
         <Accordion options={aboutUsData} />
         <div>
           <img src="/assets/static/about-us.png" />
         </div>
       </div>
+      
       <div className="my-14">
         <SectionTitle text="پاسخ خود را پیدا نکردید؟" />
         <p>
