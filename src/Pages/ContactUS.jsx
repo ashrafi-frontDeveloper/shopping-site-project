@@ -1,8 +1,43 @@
+import axios from "axios";
+import { useState } from "react";
 import { Link } from "react-router";
+import { toast } from "sonner";
 import SectionTitle from "../Components/Common/SectionTitle";
 import InputField from "../Components/Templates/ContactUS/InputField";
 
 const ContactUSPage = () => {
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    content: "",
+    subject: "",
+  });
+
+  const changeHandler = (e) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+
+    console.log("Send Content");
+
+    try {
+      const res = await axios.post(
+        "https://shopino.iran.liara.run/v1/contact-us",
+        form,
+      );
+
+      if (res.data.status === 201) {
+        toast("پیام شما با موفقیت ارسال شد.");
+      }
+
+      console.log(res);
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  };
+
   return (
     <main className="my-20 container" id="contact-us">
       <SectionTitle
@@ -21,18 +56,25 @@ const ContactUSPage = () => {
           </p>
           <div className="grid grid-cols-2 gap-5 **:w-full">
             <InputField
+              value={form.name}
+              onChange={changeHandler}
+              name="name"
               placeholder="مثال: امین سعیدی"
               label="نام و نام خانوادگی"
             />
-            <InputField placeholder="مثال: 09911871596" label="شماره موبایل" />
 
             <InputField
-              type="email"
-              placeholder="مثال: sabzshop@support.ir"
-              fullWidth
-              label="آدرس ایمیل"
+              value={form.phone}
+              onChange={changeHandler}
+              name="phone"
+              placeholder="مثال: 09911871596"
+              label="شماره موبایل"
             />
+
             <InputField
+              value={form.subject}
+              onChange={changeHandler}
+              name="subject"
               type="text"
               placeholder="مثال: مرجوع کردن محصول"
               fullWidth
@@ -47,10 +89,12 @@ const ContactUSPage = () => {
                 محتوا:
               </label>
               <textarea
+                value={form.content}
+                onChange={changeHandler}
                 id="contact-message"
                 className="h-10 rounded-md mt-2.5 border text-sm py-4 min-h-[140px] border-neutral-200 ring-offset-2 px-4 duration-150 focus-within:ring-4 ring-sky-400/40 focus-within:outline-none"
                 placeholder="مثال: قصد مرجوعی محصول با شناسه #124214 را دارم"
-                name="contact-message"
+                name="content"
               ></textarea>
             </div>
           </div>
@@ -60,7 +104,10 @@ const ContactUSPage = () => {
               انصراف
             </Link>
 
-            <button className=" bg-linear-to-t from-blue-600 px-4 py-2.5 rounded-md text-white cursor-pointer hover:opacity-90 focus-within:ring-4 ring-sky-300/50 ring-offset-2 duration-150 to-blue-400 max-w-max ">
+            <button
+              className=" bg-linear-to-t from-blue-600 px-4 py-2.5 rounded-md text-white cursor-pointer hover:opacity-90 focus-within:ring-4 ring-sky-300/50 ring-offset-2 duration-150 to-blue-400 max-w-max"
+              onClick={submitHandler}
+            >
               ثبت و ارسال
             </button>
           </div>
@@ -72,6 +119,7 @@ const ContactUSPage = () => {
           />
         </div>
       </div>
+
       <div className="space-y-10 my-10">
         <SectionTitle
           text="مراجعه حضوری"
