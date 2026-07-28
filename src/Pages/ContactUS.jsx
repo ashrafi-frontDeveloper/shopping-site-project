@@ -22,20 +22,29 @@ const ContactUSPage = () => {
 
     console.log("Send Content");
 
-    try {
-      const res = await axios.post(
-        "https://shopino.iran.liara.run/v1/contact-us",
-        form,
-      );
 
-      if (res.data.status === 201) {
-        toast("پیام شما با موفقیت ارسال شد.");
+    const response = axios.post(
+      "https://shopino.iran.liara.run/v1/contact-us",
+      form,
+    );
+    
+
+    toast.promise(response, {
+      loading: "در حال ارسال پیام",
+      success: () => {
+
+      setForm({
+          name: "",
+          phone: "",
+          content: "",
+          subject: "",
+        })
+        return "پیام شما با موفقیت ارسال شد"
+      },
+      error: () => {
+        return "خطا: پیام شما ارسال نشد، دوباره امتحان کنید."
       }
-
-      console.log(res);
-    } catch (error) {
-      console.log(error.response.data.message);
-    }
+    })
   };
 
   return (
