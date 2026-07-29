@@ -4,55 +4,18 @@ import { Link } from "react-router";
 import { toast } from "sonner";
 import SectionTitle from "../Components/Common/SectionTitle";
 import InputField from "../Components/Templates/ContactUS/InputField";
-import { contactUsSchema } from "../validators/ContactUs";
-import {validate} from "../validators/index"
+import { validate } from "../validators";
+import { contactUsSchema } from "../validators/contactus";
+
+  import useContactUs from "../lib/Hooks/useContactUs";
 
 const ContactUSPage = () => {
-  const [form, setForm] = useState({
+  const { form, isSubmitting, changeHandler, submitHandler } = useContactUs({
     name: "",
     phone: "",
     content: "",
     subject: "",
   });
-
-  const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const changeHandler = (e) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const submitHandler = async (e) => {
-    e.preventDefault();
-
-    if (!validate(contactUsSchema, form)) return
-    
-
-    setIsSubmitting(true)
-    const response = axios.post(
-      "https://shopino.iran.liara.run/v1/contact-us",
-      form,
-    );
-    
-
-    toast.promise(response, {
-      loading: "در حال ارسال پیام",
-      success: () => {
-
-      setForm({
-          name: "",
-          phone: "",
-          content: "",
-          subject: "",
-      })
-      setIsSubmitting(false)
-      return "پیام شما با موفقیت ارسال شد"
-      },
-      error: () => {
-        setIsSubmitting(false)
-        return "خطا: پیام شما ارسال نشد، دوباره امتحان کنید."
-      }
-    })
-  };
 
   return (
     <main className="my-20 container" id="contact-us">
@@ -121,10 +84,13 @@ const ContactUSPage = () => {
             </Link>
 
             <button
-              className=" bg-linear-to-t from-blue-600 px-4 py-2.5 rounded-md text-white cursor-pointer hover:opacity-90 focus-within:ring-4 ring-sky-300/50 ring-offset-2 duration-150 to-blue-400 max-w-max"
+              className={`bg-linear-to-t from-blue-600 px-4 py-2.5 rounded-md text-white cursor-pointer hover:opacity-90 focus-within:ring-4 ring-sky-300/50 ring-offset-2 duration-150 to-blue-400 max-w-max ${
+                isSubmitting ? "opacity-50 cursor-not-allowed" : null
+              }`}
               onClick={submitHandler}
+              disabled={isSubmitting}
             >
-              {isSubmitting ? "در حال ارسال" : "ارسال پیام"}
+              {isSubmitting ? "در حال ارسال..." : "ثبت و ارسال"}
             </button>
           </div>
         </div>
