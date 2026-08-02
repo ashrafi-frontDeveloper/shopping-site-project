@@ -16,3 +16,7 @@ export const verifyOtp = async (phone, otp) => {
     );
     return data
 };
+
+export const getMe = async () => {
+    // Code...
+};
