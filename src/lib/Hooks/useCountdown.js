@@ -40,4 +40,4 @@ const useCountdown = (duration = 120) => {
   };
 };
 
-export default useCountdown
+export default useCountdown;

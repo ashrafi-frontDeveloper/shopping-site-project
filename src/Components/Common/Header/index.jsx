@@ -1,7 +1,6 @@
-import React from "react";
+import { TbBooks, TbHome, TbInfoCircle, TbPhoneCall } from "react-icons/tb";
 import { Link } from "react-router";
 import Buttons from "./Fragments/Buttons";
-import { TbBooks, TbHome, TbInfoCircle, TbPhoneCall } from "react-icons/tb";
 
 const Header = () => {
   return (

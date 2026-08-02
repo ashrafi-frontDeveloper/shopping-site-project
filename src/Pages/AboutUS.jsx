@@ -1,23 +1,20 @@
-import React from "react";
-import SectionTitle from "../Components/Common/SectionTitle";
-import { LOREM_TEXT } from "../lib/constants.js";
-import Accordion from "../Components/Common/Accordion";
-import aboutUsData from "../Components/Templates/AboutUS/settings/data";
-import { Link } from "react-router";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import { Link } from "react-router";
+import Accordion from "../Components/Common/Accordion";
+import SectionTitle from "../Components/Common/SectionTitle";
+import aboutUsData from "../Components/Templates/AboutUS/settings/data";
+import { LOREM_TEXT } from "../lib/constants.js";
 
 const AboutUSPage = () => {
   return (
     <main id="about-us" className="container my-10">
       <SectionTitle text="ما کی هستیم؟" description={LOREM_TEXT} />
-
       <div className="w-full mt-10 gap-10 grid grid-cols-2">
         <Accordion options={aboutUsData} />
         <div>
           <img src="/assets/static/about-us.png" />
         </div>
       </div>
-      
       <div className="my-14">
         <SectionTitle text="پاسخ خود را پیدا نکردید؟" />
         <p>

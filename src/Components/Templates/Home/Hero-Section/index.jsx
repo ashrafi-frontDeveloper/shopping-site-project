@@ -1,6 +1,8 @@
 import "swiper/css";
+
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+
 import SliderButtons from "./Fragments/SliderButtons";
 
 const HeroSection = () => {
@@ -15,17 +17,22 @@ const HeroSection = () => {
       >
         <SwiperSlide>
           <div className="h-[400px] w-full">
-            <img src="/assets/static/banner1.png" className="size-full object-cover" />
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="h-[400px] w-full">
-            <img src="/assets/static/banner2.png" className="size-full object-cover" />
+            <img
+              src="/assets/static/banner1.png"
+              className="size-full! object-cover!"
+            />
           </div>
         </SwiperSlide>
 
+        <SwiperSlide>
+          <div className="h-[400px] w-full">
+            <img
+              src="/assets/static/banner2.png"
+              className="size-full! object-cover!"
+            />
+          </div>
+        </SwiperSlide>
         <SliderButtons />
-        
       </Swiper>
     </section>
   );

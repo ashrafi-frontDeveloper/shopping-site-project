@@ -10,7 +10,7 @@ export const useAuth = () => {
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
   const [isSentOtp, setIsSentOtp] = useState(false);
-  const { restart, getFormattedTime, isExpired } = useCountdown(5);
+  const { restart, getFormattedTime, isExpired } = useCountdown(120);
   const navigate = useNavigate();
 
   const handlePhoneChange = (e) => {
