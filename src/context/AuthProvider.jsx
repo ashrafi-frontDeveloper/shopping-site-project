@@ -8,6 +8,7 @@ const AuthProvider = ({ children }) => {
   
   const initAuth = async () => {
     try {
+      setIsLoading(true)
       const response = await AuthService.getMe();
       console.log("response.data.user : ", response.data.user);
       
