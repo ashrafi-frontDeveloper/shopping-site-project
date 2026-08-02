@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import * as authService from "./../../services/auth.service";
 import { sendOtpSchema, verifyOtpSchema } from "./../../validators/auth";
 import { validate } from "./../../validators/index";
 import useCountdown from "./useCountdown";
+import AuthContext from "../../context/AuthContext";
 
 export const useAuth = () => {
   const [phone, setPhone] = useState("");
@@ -12,6 +13,8 @@ export const useAuth = () => {
   const [isSentOtp, setIsSentOtp] = useState(false);
   const { restart, getFormattedTime, isExpired } = useCountdown(120);
   const navigate = useNavigate();
+  const {refreshUser} = useContext(AuthContext)
+
 
   const handlePhoneChange = (e) => {
     setPhone(e.target.value);
@@ -63,6 +66,8 @@ export const useAuth = () => {
     toast.success("با موفقیت وارد شدید.");
 
     navigate("/");
+
+    await refreshUser()
   };
 
   const handleSubmit = async (e) => {

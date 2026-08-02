@@ -5,21 +5,22 @@ import AuthContext from "./AuthContext";
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
+  
+  const initAuth = async () => {
+    try {
+      const response = await AuthService.getMe();
+      console.log("response.data.user : ", response.data.user);
+      
+      setUser(response.data.user);
+    } catch (err) {
+      console.error("[GetMe]", err);
+      setUser(null);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const initAuth = async () => {
-      try {
-        const response = await AuthService.getMe();
-        console.log("response.data.user : ", response.data.user);
-        
-        setUser(response.data.user);
-      } catch (err) {
-        console.error("[GetMe]", err);
-        setUser(null);
-      } finally {
-        setIsLoading(false);
-      }
-    };
 
     initAuth();
   }, []);
@@ -28,9 +29,14 @@ const AuthProvider = ({ children }) => {
     // Codes
   };
 
+  const refreshUser = async () => {
+    initAuth()
+  }
+
   const value = {
     user,
     isLoading,
+    refreshUser
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
