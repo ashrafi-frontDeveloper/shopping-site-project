@@ -1,13 +1,9 @@
-import axios from "axios";
-import { useState } from "react";
 import { Link } from "react-router";
-import { toast } from "sonner";
 import SectionTitle from "../Components/Common/SectionTitle";
 import InputField from "../Components/Templates/ContactUS/InputField";
-import { validate } from "../validators";
-import { contactUsSchema } from "../validators/contactus";
 
-  import useContactUs from "../lib/Hooks/useContactUs";
+import Maps from "../Components/Templates/ContactUS/Maps";
+import useContactUs from "../lib/Hooks/useContactUs";
 
 const ContactUSPage = () => {
   const { form, isSubmitting, changeHandler, submitHandler } = useContactUs({
@@ -108,7 +104,7 @@ const ContactUSPage = () => {
           description="شما می‌توانید به صورت حضوری به یکی از دفاتر رسمی شاپینو مراجعه کنید و با همکاران ما در ارتباط باشید."
         />
 
-        {/* <Maps /> */}
+        <Maps />
       </div>
     </main>
   );
