@@ -8,8 +8,10 @@ import ContactUSPage from "../Pages/ContactUS.jsx";
 import HomePage from "../Pages/HomePage.jsx";
 import ProductPage from "../Pages/Product.jsx";
 
+import { redirect } from "react-router";
 import AppLayout from "../Components/Layouts/AppLayout.jsx";
 import AuthLayout from "../Components/Layouts/AuthLayout.jsx";
+import CMSLayout from "../Components/Layouts/CMSLayout.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +29,22 @@ const router = createBrowserRouter([
         path: "auth",
         element: <AuthLayout />,
         children: [{ index: true, element: <AuthPage /> }],
+      },
+    ],
+  },
+
+  {
+    path: "/dashboard",
+    element: <CMSLayout />,
+    children: [
+      {
+        path: "moderator",
+        children: [
+          { index: true, loader: () => redirect("home") },
+          { path: "home", element: <div>Home Page</div> },
+          { path: "orders", element: <div>Orders Page</div> },
+          { path: "products", element: <div>Products Page</div> },
+        ],
       },
     ],
   },
