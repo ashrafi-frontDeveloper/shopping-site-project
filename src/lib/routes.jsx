@@ -13,6 +13,8 @@ import AppLayout from "../Components/Layouts/AppLayout.jsx";
 import AuthLayout from "../Components/Layouts/AuthLayout.jsx";
 import CMSLayout from "../Components/Layouts/CMSLayout.jsx";
 
+import * as AuthService from "../services/auth.service.js"
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -39,6 +41,17 @@ const router = createBrowserRouter([
     children: [
       {
         path: "moderator",
+        loader: async () => {
+          try {
+            const {data} = await AuthService.getMe();
+            if (!data.user.roles.includes("ADMIN")) {
+              return redirect('/auth')
+            } 
+            return data.user
+          } catch (error) {
+            return redirect('/auth')
+          }
+        },
         children: [
           { index: true, loader: () => redirect("home") },
           { path: "home", element: <div>Home Page</div> },
