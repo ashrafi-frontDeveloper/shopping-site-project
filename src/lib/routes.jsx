@@ -7,6 +7,7 @@ import CartPage from "../Pages/Cart.jsx";
 import ContactUSPage from "../Pages/ContactUS.jsx";
 import HomePage from "../Pages/HomePage.jsx";
 import ProductPage from "../Pages/Product.jsx";
+import Forbidden from "../Pages/Forbidden.jsx";
 
 import { redirect } from "react-router";
 import AppLayout from "../Components/Layouts/AppLayout.jsx";
@@ -32,6 +33,9 @@ const router = createBrowserRouter([
         element: <AuthLayout />,
         children: [{ index: true, element: <AuthPage /> }],
       },
+
+      { path: "forbidden", element: <Forbidden /> },
+
     ],
   },
 
@@ -45,7 +49,7 @@ const router = createBrowserRouter([
           try {
             const {data} = await AuthService.getMe();
             if (!data.user.roles.includes("ADMIN")) {
-              return redirect('/auth')
+              return redirect('/forbidden')
             } 
             return data.user
           } catch (error) {
