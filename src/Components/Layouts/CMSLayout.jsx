@@ -1,5 +1,5 @@
 import { Outlet } from "react-router";
-import Sidebar from "./../../Components/Common/Sidebar/index";
+import Sidebar from "./../Common/Sidebar";
 
 const CMSLayout = () => {
   return (
