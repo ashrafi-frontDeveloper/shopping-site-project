@@ -8,6 +8,7 @@ import ContactUSPage from "../Pages/ContactUS.jsx";
 import HomePage from "../Pages/HomePage.jsx";
 import ProductPage from "../Pages/Product.jsx";
 import Forbidden from "../Pages/Forbidden.jsx";
+import NotFound from "../Pages/NotFound.jsx";
 
 import { redirect } from "react-router";
 import AppLayout from "../Components/Layouts/AppLayout.jsx";
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
       },
 
       { path: "forbidden", element: <Forbidden /> },
+      { path: "*", element: <NotFound /> },
 
     ],
   },
