@@ -1,0 +1,16 @@
+import NavItem from "../../../Components/Common/Sidebar/fragments/NavItem/index";
+
+const ModeratorLinks = () => {
+  return (
+    <>
+      <NavItem href="/dashboard/moderator/home" label="پیشخوان" />
+      <NavItem href="/dashboard/moderator/products" label="محصولات" />
+      <NavItem href="/dashboard/moderator/orders" label="سفارشات" />
+      <NavItem href="/dashboard/moderator/tickets" label="تیکت‌ها" />
+      <NavItem href="/dashboard/moderator/sellers" label="فروشنده‌ها" />
+      <NavItem href="/dashboard/moderator/offs" label="تخفیفات" />
+    </>
+  );
+};
+
+export default ModeratorLinks;
