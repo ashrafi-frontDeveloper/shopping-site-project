@@ -28,11 +28,13 @@ const AuthProvider = ({ children }) => {
     try {
       setIsLoading(true);
       const response = await AuthService.logout();
-    } catch (error) {
-      console.log("err:" , error);
+
+      console.log(response);
+    } catch (err) {
+      console.log(`[Logout] ->`, err);
     } finally {
-      setUser(null)
-      setIsLoading(false)
+      setUser(null);
+      setIsLoading(false);
     }
   };
 

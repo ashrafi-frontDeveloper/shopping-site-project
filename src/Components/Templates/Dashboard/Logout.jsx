@@ -1,26 +1,25 @@
 import { useContext } from "react";
 import { BiLogOut } from "react-icons/bi";
+import { useNavigate } from "react-router";
 import AuthContext from "../../../context/AuthContext";
-import { replace, useNavigate } from "react-router";
 
 const Logout = () => {
+  const { logout, refreshUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const {logout , refreshUser} = useContext(AuthContext)
-  const navigate= useNavigate()
-
-  const handlerLogout = async () => {
+  const handleLogout = async () => {
     try {
-      await logout()
-    } catch (error) {
-      
+      await logout();
+    } catch (err) {
+      // Codes
     } finally {
-      refreshUser()
-      navigate("/auth" , {replace: true})
+      refreshUser();
+      navigate("/auth", { replace: true });
     }
-  }
+  };
 
   return (
-    <footer className="p-3 w-full" onClick={handlerLogout}>
+    <footer className="p-3 w-full" onClick={handleLogout}>
       <button className="flex items-center gap-3 duration-150 transition-all hover:bg-zinc-100/70 p-1.5 rounded-lg relative w-full cursor-pointer">
         <span className="w-1 absolute top-0 rounded-full opacity-50 bottom-0 my-auto -right-1 h-[80%] z-0" />
 

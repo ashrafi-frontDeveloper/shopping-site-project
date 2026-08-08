@@ -1,6 +1,6 @@
 import { Outlet } from "react-router";
-import Sidebar from "./../Common/Sidebar";
 import AuthProvider from "../../context/AuthProvider";
+import Sidebar from "./../Common/Sidebar";
 
 const CMSLayout = () => {
   return (

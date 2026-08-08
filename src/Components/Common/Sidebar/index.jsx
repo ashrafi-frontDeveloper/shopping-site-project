@@ -1,5 +1,5 @@
+import Logout from "../../Templates/Dashboard/Logout";
 import ModeratorLinks from "../../Templates/Dashboard/ModeratorLinks";
-import Logout from "../../Templates/Dashboard/Logout"
 
 const index = () => {
   return (

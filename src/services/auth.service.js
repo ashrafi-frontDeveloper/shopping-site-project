@@ -3,6 +3,8 @@ import api from "./api";
 export const sendOtp = async (phone) => {
   const { data } = await api.post("/auth/send", { phone });
 
+  console.log("[SendOTP]");
+
   return data;
 };
 
