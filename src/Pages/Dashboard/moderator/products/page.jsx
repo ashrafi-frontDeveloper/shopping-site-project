@@ -5,7 +5,7 @@ const ModeratorProducts = () => {
   return (
     <div className="space-y-10">
       <PageLabel label="مدیریت محصولات فروشگاه" />
-      <ModeratorProductsTable />
+      {/* <ModeratorProductsTable /> */}
     </div>
   );
 };
