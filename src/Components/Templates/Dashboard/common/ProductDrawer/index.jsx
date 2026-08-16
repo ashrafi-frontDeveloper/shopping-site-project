@@ -1,7 +1,11 @@
+import useCategories from "../../../../../lib/Hooks/useCategories";
 import Drawer from "../Drawer";
 import ProductDrawerInput from "./ProductDrawerInput";
 
 const ProductDrawer = ({ isOpen, onToggle }) => {
+
+  const {isLoading: categoriesIsLoading, categories} = useCategories()
+
   return (
     <Drawer isOpen={isOpen} onClose={onToggle} title="ایجاد محصول">
       <div className="space-y-4 mt-5 px-6">
@@ -22,6 +26,16 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
           placeholder="iphone-17-promax"
           type="file"
         />
+
+        <div className="">
+          <label htmlFor="" className="text-sm font-medium text-zinc-700 mb-2 block">دسته بندی</label>
+
+          {
+            categoriesIsLoading ? <p className="text-sm text-zinc-400">در حال بارگذاری</p> 
+            : <Categories categories={categories} />
+          }
+
+        </div>
 
         <div>
           <label htmlFor="product-details"> توضیحات محصول </label>
