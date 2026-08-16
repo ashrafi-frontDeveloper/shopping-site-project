@@ -1,5 +1,6 @@
 import useCategories from "../../../../../lib/Hooks/useCategories";
 import Drawer from "../Drawer";
+import CascadeCategories from "./CascadeCategories";
 import ProductDrawerInput from "./ProductDrawerInput";
 
 const ProductDrawer = ({ isOpen, onToggle }) => {
@@ -37,8 +38,7 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
           {categoriesIsLoading ? (
             <p className="text-xs text-zinc-400">در حال بارگزاری ...</p>
           ) : (
-            <div>لیست دسته بندی‌ها</div>
-            // <Categories categories={categories} />
+            <CascadeCategories categories={categories} />
           )}
         </div>
 

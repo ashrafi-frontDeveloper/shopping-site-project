@@ -10,15 +10,13 @@ const useCategories = () => {
 
     const fetchData = async () => {
       try {
-        setTimeout(async () => {
-          const res = await getAllCategories();
+        const res = await getAllCategories();
 
-          if (mounted) {
-            console.log(res);
+        if (mounted) {
+          console.log(res);
 
-            setCategories(res?.data?.categories || []);
-          }
-        }, 3000);
+          setCategories(res?.data?.categories || []);
+        }
       } catch (err) {
         mounted && console.log(err);
       } finally {
