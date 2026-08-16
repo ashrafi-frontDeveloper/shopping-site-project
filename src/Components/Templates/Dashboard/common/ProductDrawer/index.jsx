@@ -3,8 +3,7 @@ import Drawer from "../Drawer";
 import ProductDrawerInput from "./ProductDrawerInput";
 
 const ProductDrawer = ({ isOpen, onToggle }) => {
-
-  const {isLoading: categoriesIsLoading, categories} = useCategories()
+  const { isLoading: categoriesIsLoading, categories } = useCategories();
 
   return (
     <Drawer isOpen={isOpen} onClose={onToggle} title="ایجاد محصول">
@@ -27,14 +26,20 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
           type="file"
         />
 
-        <div className="">
-          <label htmlFor="" className="text-sm font-medium text-zinc-700 mb-2 block">دسته بندی</label>
+        <div>
+          <label
+            htmlFor=""
+            className="text-sm font-medium text-zinc-700 mb-2 block"
+          >
+            دسته‌بندی
+          </label>
 
-          {
-            categoriesIsLoading ? <p className="text-sm text-zinc-400">در حال بارگذاری</p> 
-            : <Categories categories={categories} />
-          }
-
+          {categoriesIsLoading ? (
+            <p className="text-xs text-zinc-400">در حال بارگزاری ...</p>
+          ) : (
+            <div>لیست دسته بندی‌ها</div>
+            // <Categories categories={categories} />
+          )}
         </div>
 
         <div>

@@ -51,12 +51,9 @@ const ModeratorProductsTable = () => {
         </TableBody>
       </Table>
 
-      {
-        isDrawerShow && (
-          <ProductDrawer isOpen={isDrawerShow} onToggle={toggleDrawer} />
-        )
-      }
-
+      {isDrawerShow && (
+        <ProductDrawer isOpen={isDrawerShow} onToggle={toggleDrawer} />
+      )}
     </>
   );
 };
