@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const CascadeCategories = ({ categories }) => {
+const CascadeCategories = ({ categories, onChange }) => {
   const [path, setPath] = useState([]);
 
   const levels = [categories, ...path.map((cat) => cat.subCategories || [])];
