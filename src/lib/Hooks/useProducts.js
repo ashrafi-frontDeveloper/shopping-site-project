@@ -34,5 +34,6 @@ export const useProducts = (limit = 10) => {
     setPage,
     isLoading,
     error,
+    refetch: fetchProducts,
   };
 };

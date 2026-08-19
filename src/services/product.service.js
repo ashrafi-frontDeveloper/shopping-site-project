@@ -20,4 +20,10 @@ export const getAllProducts = async (params) => {
   return data;
 };
 
+export const removeProduct = async (id) => {
+  const { data } = await api.delete(`/products/${id}`);
+
+  return data;
+};
+
 export default createProduct;

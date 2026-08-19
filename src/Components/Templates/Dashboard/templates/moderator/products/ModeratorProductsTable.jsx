@@ -3,8 +3,11 @@ import TableCell from "../../../common/Table/TableCell";
 import TableRow from "../../../common/Table/TableRow";
 
 import { useState } from "react";
-import { BiPlus } from "react-icons/bi";
+import { BiPencil, BiPlus, BiTrash } from "react-icons/bi";
+import { toast } from "sonner";
 import { useProducts } from "../../../../../../lib/Hooks/useProducts";
+import { removeProduct } from "../../../../../../services/product.service";
+import Confirm from "../../../../../Common/Confirm";
 import ProductDrawer from "../../../common/ProductDrawer";
 import TableBody from "../../../common/Table/TableBody";
 import TableHead from "../../../common/Table/TableHead";
@@ -18,8 +21,26 @@ const ModeratorProductsTable = () => {
   const [isDrawerShow, setIsDrawerShow] = useState(false);
   const toggleDrawer = () => setIsDrawerShow((prev) => !prev);
 
-  const { products, pagination, page, setPage, isLoading, error } =
+  const [deletingProduct, setDeletingProduct] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const { products, pagination, page, setPage, isLoading, error, refetch } =
     useProducts();
+
+  const handleRemove = async () => {
+    setIsDeleting(true);
+
+    try {
+      await removeProduct(deletingProduct._id);
+      toast.success("محصول با موفقیت حذف شد");
+      setDeletingProduct(null);
+      refetch();
+    } catch (err) {
+      toast.error(err?.response?.data?.message || "خطا در حذف محصول");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   return (
     <>
@@ -45,6 +66,7 @@ const ModeratorProductsTable = () => {
             <TableCell>شناسه</TableCell>
             <TableCell>عنوان</TableCell>
             <TableCell>مبلغ</TableCell>
+            <TableCell>عملیات</TableCell>
           </TableRow>
         </TableHead>
 
@@ -98,11 +120,60 @@ const ModeratorProductsTable = () => {
                       {hasMultipleSellers && "(بیش از یک فروشنده)"}
                     </>
                   </TableCell>
+                  <TableCell>
+                    <button
+                      className="text-blue-500 hover:bg-blue-50 p-2 rounded-md"
+                      title="ویرایش"
+                    >
+                      <BiPencil />
+                    </button>
+
+                    <button
+                      className="text-red-500 hover:bg-blue-50 p-2 rounded-md"
+                      title="حذف"
+                      onClick={() => setDeletingProduct(product)}
+                    >
+                      <BiTrash />
+                    </button>
+                  </TableCell>
                 </TableRow>
               );
             })}
         </TableBody>
       </Table>
+
+      {pagination && pagination.totalPages > 1 && (
+        <div className="flex items-center justify-center gap-2 mt-4">
+          <button
+            className="px-3 py-1 rounded-md primary-border text-sm disabled:opacity-40"
+            disabled={page <= 1}
+            onClick={() => setPage((prev) => prev - 1)}
+          >
+            قبلی
+          </button>
+
+          <span className="text-sm text-zinc-500">
+            صفحه {pagination.page} از {pagination.totalPages}
+          </span>
+
+          <button
+            className="px-3 py-1 rounded-md primary-border text-sm disabled:opacity-40"
+            disabled={page >= pagination.totalPages}
+            onClick={() => setPage((prev) => prev + 1)}
+          >
+            بعدی
+          </button>
+        </div>
+      )}
+
+      <Confirm
+        isOpen={!!deletingProduct}
+        title="حذف محصول"
+        description={`آیا از حذف محصول ${deletingProduct?.name} مطمئن هستید؟ این عمل غیر قابل بازگشت است`}
+        onConfirm={handleRemove}
+        onCancel={() => setDeletingProduct(null)}
+        isLoading={isDeleting}
+      />
 
       {isDrawerShow && (
         <ProductDrawer isOpen={isDrawerShow} onToggle={toggleDrawer} />
