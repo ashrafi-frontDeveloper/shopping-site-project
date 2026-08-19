@@ -16,6 +16,7 @@ import Forbidden from "../Pages/Forbidden.jsx";
 import NotFound from "../Pages/NotFound.jsx";
 import * as AuthService from "./../services/auth.service.js";
 
+import ModeratorCategories from "./../Pages/Dashboard/moderator/categories/page.jsx";
 import ModeratorProducts from "./../Pages/Dashboard/moderator/products/page.jsx";
 
 const router = createBrowserRouter([
@@ -66,6 +67,7 @@ const router = createBrowserRouter([
           { path: "home", element: <div>Home Page</div> },
           { path: "orders", element: <div>Orders Page</div> },
           { path: "products", element: <ModeratorProducts /> },
+          { path: "categories", element: <ModeratorCategories /> },
         ],
       },
     ],

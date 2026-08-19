@@ -14,6 +14,13 @@ const ModeratorLinks = () => {
         label="پیشخوان"
       />
       <NavItem
+        bgColor="bg-green-500"
+        iconColor="text-green-500"
+        icon={<BsBox2 />}
+        href="/dashboard/moderator/categories"
+        label="دسته‌بندی‌ها"
+      />
+      <NavItem
         bgColor="bg-yellow-500"
         iconColor="text-yellow-500"
         icon={<BsBox2 />}
