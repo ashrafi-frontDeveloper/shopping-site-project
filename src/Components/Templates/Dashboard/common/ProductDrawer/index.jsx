@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import useCategories from "../../../../../lib/Hooks/useCategories";
 import useProductForm from "../../../../../lib/Hooks/useProductForm";
 import createProduct from "../../../../../services/product.service";
 import Drawer from "../Drawer";
 import CascadeCategories from "./CascadeCategories";
 import DynamicKeyValueFields from "./DynamicKeyValueFields";
+import ImageUploadField from "./ImageUploadField";
 import ProductDrawerInput from "./ProductDrawerInput";
 import SellerFields from "./SellerFields";
 
@@ -50,8 +52,9 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
 
     try {
       await createProduct(buildFormData());
-      resetForm();
+      // resetForm();
       toast.success("محصول با موفقیت ایجاد شد");
+      // onToggle();
     } catch (err) {
       setError(err.response?.data?.message || "خطایی رخ داده است");
     }
@@ -76,12 +79,6 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
           type="text"
           value={form.slug}
           onChange={(e) => setField("slug", e.target.value)}
-        />
-
-        <ProductDrawerInput
-          label="تصویر محصول"
-          placeholder="iphone-17-promax"
-          type="file"
         />
 
         <div>
@@ -128,6 +125,8 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
             updatePair("customFields", index, key, value)
           }
         />
+
+        <ImageUploadField files={form.images} onChange={setImages} />
 
         <div>
           <label htmlFor="product-details"> توضیحات محصول </label>

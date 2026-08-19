@@ -11,6 +11,9 @@ const CascadeCategories = ({ categories, onChange }) => {
 
     const newPath = [...path.slice(0, levelIndex), node];
     setPath(newPath);
+
+    const isLeaf = !node.subCategories || node.subCategories.length === 0;
+    onChange(isLeaf ? node : null);
   };
 
   return (
