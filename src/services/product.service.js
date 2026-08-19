@@ -2,8 +2,6 @@ import api from "./api";
 
 const createProduct = async (formData) => {
   try {
-    console.log([...formData.entries()]);
-
     const { data } = await api.post("/products", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -14,6 +12,12 @@ const createProduct = async (formData) => {
   } catch (err) {
     console.log(err);
   }
+};
+
+export const getAllProducts = async (params) => {
+  const { data } = await api.get("/products", { params });
+
+  return data;
 };
 
 export default createProduct;

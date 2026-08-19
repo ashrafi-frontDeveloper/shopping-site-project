@@ -38,7 +38,7 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
 
   const handleSubmit = async (e) => {
     if (!form.name.trim() || !form.slug.trim() || !form.description.trim()) {
-      setError("عنوان و لینک محصول الزامی هستن");
+      setError("عنوان، توضیحات و لینک محصول الزامی هستن");
       return;
     }
 
@@ -52,9 +52,9 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
 
     try {
       await createProduct(buildFormData());
-      // resetForm();
+      resetForm();
       toast.success("محصول با موفقیت ایجاد شد");
-      // onToggle();
+      onToggle();
     } catch (err) {
       setError(err.response?.data?.message || "خطایی رخ داده است");
     }
@@ -139,6 +139,8 @@ const ProductDrawer = ({ isOpen, onToggle }) => {
             onChange={(e) => setField("description", e.target.value)}
           ></textarea>
         </div>
+
+        {error && <p className="text-red-500 text-xs">{error}</p>}
 
         <div className="mt-5 flex items-center justify-end gap-2">
           <button className="px-4 py-2 rounded-md bg-red-500/10 text-red-500 hover:bg-red-500/15 ">
