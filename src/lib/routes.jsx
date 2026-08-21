@@ -18,6 +18,7 @@ import * as AuthService from "./../services/auth.service.js";
 
 import ModeratorCategories from "./../Pages/Dashboard/moderator/categories/page.jsx";
 import ModeratorProducts from "./../Pages/Dashboard/moderator/products/page.jsx";
+import ModeratorUsers from "../Pages/Dashboard/moderator/users/page.jsx";
 
 const router = createBrowserRouter([
   {
@@ -68,6 +69,7 @@ const router = createBrowserRouter([
           { path: "orders", element: <div>Orders Page</div> },
           { path: "products", element: <ModeratorProducts /> },
           { path: "categories", element: <ModeratorCategories /> },
+          { path: "users", element: <ModeratorUsers /> },
         ],
       },
     ],

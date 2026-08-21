@@ -38,7 +38,7 @@ const ModeratorLinks = () => {
         bgColor="bg-blue-500"
         iconColor="text-blue-500"
         icon={<FaUser />}
-        href="/dashboard/moderator/tickets"
+        href="/dashboard/moderator/users"
         label="کاربران"
       />
       <NavItem
