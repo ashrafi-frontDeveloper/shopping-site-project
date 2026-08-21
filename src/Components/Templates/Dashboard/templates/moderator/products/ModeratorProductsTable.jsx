@@ -95,14 +95,6 @@ const ModeratorProductsTable = () => {
             </TableRow>
           )}
 
-          {!isLoading && !error && products.length === 0 && (
-            <TableRow>
-              <TableCell colSpan={3} className="text-center text-zinc-400">
-                هنوز محصولی ثبت نشده
-              </TableCell>
-            </TableRow>
-          )}
-
           {!isLoading &&
             !error &&
             products.map((product) => {
