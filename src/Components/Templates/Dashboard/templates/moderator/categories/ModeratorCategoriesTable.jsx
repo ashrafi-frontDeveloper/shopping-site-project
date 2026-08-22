@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BiPencil, BiPlus, BiTrash } from "react-icons/bi";
+import { toast } from "sonner";
 import useCategories from "../../../../../../lib/Hooks/useCategories";
 import { deleteCategory } from "../../../../../../services/category.service";
 import Confirm from "../../../../../Common/Confirm";
@@ -22,7 +23,7 @@ const ModeratorCategoriesTable = () => {
     setIsDeleting(true);
 
     try {
-      await deleteCategory(deleteCategory._id);
+      await deleteCategory(deletingCategory._id);
       toast.success("محصول با موفقیت حذف شد");
       setDeletingCategory(null);
       refetch();
@@ -130,7 +131,11 @@ const ModeratorCategoriesTable = () => {
         isLoading={isDeleting}
       />
 
-      <CreateCategoryModal isOpen={isOpenForm} />
+      <CreateCategoryModal
+        isOpen={isOpenForm}
+        onClose={() => setIsOpenForm(false)}
+        onSuccess={refetch}
+      />
     </>
   );
 };

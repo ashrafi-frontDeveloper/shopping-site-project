@@ -7,7 +7,7 @@ const emptyFilter = {
 };
 
 export const filtersReducer = (filters, action) => {
-  switch (action.case) {
+  switch (action.type) {
     case "filters/add": {
       return [...filters, { ...emptyFilter }];
     }
@@ -27,7 +27,7 @@ export const filtersReducer = (filters, action) => {
     case "filters/optionsChange": {
       return filters.map((filter, i) =>
         i === action.payload.index
-          ? { ...filter, options: [action.payload.options] }
+          ? { ...filter, options: action.payload.options }
           : filter,
       );
     }
