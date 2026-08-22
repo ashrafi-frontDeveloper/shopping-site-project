@@ -9,12 +9,14 @@ import TableCell from "../../../common/Table/TableCell";
 import TableHead from "../../../common/Table/TableHead";
 import TableRow from "../../../common/Table/TableRow";
 import TableToolbar from "../../../common/Table/TableToolbar";
+import CreateCategoryModal from "./CreateCategoryModal";
 
 const ModeratorCategoriesTable = () => {
   const { categories, isLoading, error, refetch } = useCategories();
 
   const [deletingCategory, setDeletingCategory] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isOpenForm, setIsOpenForm] = useState(false);
 
   const handleRemove = async () => {
     setIsDeleting(true);
@@ -42,7 +44,10 @@ const ModeratorCategoriesTable = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <button className="px-3 hover:opacity-90 flex items-center h-10 rounded-md bg-blue-500 text-white">
+            <button
+              onClick={() => setIsOpenForm(true)}
+              className="px-3 hover:opacity-90 flex items-center h-10 rounded-md bg-blue-500 text-white"
+            >
               <BiPlus />
               <span>ایجاد دسته‌بندی</span>
             </button>
@@ -124,6 +129,8 @@ const ModeratorCategoriesTable = () => {
         onCancel={() => setDeletingCategory(null)}
         isLoading={isDeleting}
       />
+
+      <CreateCategoryModal isOpen={isOpenForm} />
     </>
   );
 };

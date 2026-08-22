@@ -1,6 +1,12 @@
-import { BiPencil, BiTrash } from "react-icons/bi";
+import { useState } from "react";
+import { BiPencil } from "react-icons/bi";
+import { FaBan } from "react-icons/fa";
+import { toast } from "sonner";
 import { toPersianDate } from "../../../../../../lib/helpers/date";
 import { useUsers } from "../../../../../../lib/Hooks/useUsers";
+import { banUser } from "../../../../../../services/user.service";
+import Confirm from "../../../../../Common/Confirm";
+import Pagination from "../../../../../Common/Pagination";
 import Table from "../../../common/Table";
 import TableBody from "../../../common/Table/TableBody";
 import TableCell from "../../../common/Table/TableCell";
@@ -16,91 +22,120 @@ const roleLabels = {
 };
 
 const ModeratorUserTable = () => {
-  const { users, isLoading, error, pagination, setPage, refetch } =
+  const { users, isLoading, error, pagination, setPage, page, refetch } =
     useUsers(10);
 
-  console.log(users);
+  const [banningUser, setbanningUser] = useState(null);
+  const [isBan, setIsBan] = useState(false);
+
+  const handleBan = async () => {
+    setIsBan(true);
+
+    try {
+      await banUser(banningUser._id);
+      toast.success("کاربر با موفقیت بن شد");
+      setbanningUser(null);
+      refetch();
+    } catch (err) {
+      toast.error(err?.response?.data?.message || "خطا در بن کردن کاربر");
+    } finally {
+      setIsBan(false);
+    }
+  };
 
   return (
-    <Table>
-      <TableToolbar useFlexBetween>
-        <div>
-          <h2 className="font-black text-lg text-zinc-800">تمامی کاربران</h2>
-        </div>
-      </TableToolbar>
+    <>
+      <Table>
+        <TableToolbar useFlexBetween>
+          <div>
+            <h2 className="font-black text-lg text-zinc-800">تمامی کاربران</h2>
+          </div>
+        </TableToolbar>
 
-      <TableHead>
-        <TableRow className="">
-          <TableCell>نام</TableCell>
-          <TableCell>نقش</TableCell>
-          <TableCell>شماره تماس</TableCell>
-          <TableCell>آدرس</TableCell>
-          <TableCell>کد ملی</TableCell>
-          <TableCell>تاریخ ثبت نام</TableCell>
-          <TableCell>عملیات</TableCell>
-        </TableRow>
-      </TableHead>
-
-      <TableBody className="text-zinc-600 *:h-16! font-medium text-xs!">
-        {isLoading && (
-          <TableRow>
-            <TableCell colSpan={3} className="text-center text-zinc-400">
-              در حال بارگزاری ...
-            </TableCell>
+        <TableHead>
+          <TableRow className="">
+            <TableCell>نام</TableCell>
+            <TableCell>نقش</TableCell>
+            <TableCell>شماره تماس</TableCell>
+            <TableCell>آدرس</TableCell>
+            <TableCell>کد ملی</TableCell>
+            <TableCell>تاریخ ثبت نام</TableCell>
+            <TableCell>عملیات</TableCell>
           </TableRow>
-        )}
+        </TableHead>
 
-        {!isLoading && error && (
-          <TableRow>
-            <TableCell colSpan={3} className="text-center text-red-500">
-              {error || "خطا در دریافت کاربران"}
-            </TableCell>
-          </TableRow>
-        )}
+        <TableBody className="text-zinc-600 *:h-16! font-medium text-xs!">
+          {isLoading && (
+            <TableRow>
+              <TableCell colSpan={3} className="text-center text-zinc-400">
+                در حال بارگزاری ...
+              </TableCell>
+            </TableRow>
+          )}
 
-        {!isLoading && !error && users.length === 0 && (
-          <TableRow>
-            <TableCell colSpan={3} className="text-center text-zinc-400">
-              کاربری وجود ندارد.{" "}
-            </TableCell>
-          </TableRow>
-        )}
+          {!isLoading && error && (
+            <TableRow>
+              <TableCell colSpan={3} className="text-center text-red-500">
+                {error || "خطا در دریافت کاربران"}
+              </TableCell>
+            </TableRow>
+          )}
 
-        {!isLoading &&
-          !error &&
-          users.map((user) => {
-            return (
-              <TableRow key={user._id}>
-                <TableCell>{user.name || "ثبت نشده"}</TableCell>
-                <TableCell>
-                  {user.roles.map((role) => roleLabels[role]).join(" - ")}
-                </TableCell>
-                <TableCell>{user.phone}</TableCell>
-                <TableCell>{user.addresses[0] || "ثبت نشده"}</TableCell>
-                <TableCell>{user.nationalCode || "ثبت نشده"}</TableCell>
-                <TableCell>{toPersianDate(user.createdAt)}</TableCell>
+          {!isLoading && !error && users.length === 0 && (
+            <TableRow>
+              <TableCell colSpan={3} className="text-center text-zinc-400">
+                کاربری وجود ندارد.{" "}
+              </TableCell>
+            </TableRow>
+          )}
 
-                <TableCell>
-                  <button
-                    className="text-blue-500 hover:bg-blue-50 p-2 rounded-md"
-                    title="ویرایش"
-                  >
-                    <BiPencil />
-                  </button>
+          {!isLoading &&
+            !error &&
+            users.map((user) => {
+              return (
+                <TableRow key={user._id}>
+                  <TableCell>{user.name || "ثبت نشده"}</TableCell>
+                  <TableCell>
+                    {user.roles.map((role) => roleLabels[role]).join(" - ")}
+                  </TableCell>
+                  <TableCell>{user.phone}</TableCell>
+                  <TableCell>{user.addresses[0] || "ثبت نشده"}</TableCell>
+                  <TableCell>{user.nationalCode || "ثبت نشده"}</TableCell>
+                  <TableCell>{toPersianDate(user.createdAt)}</TableCell>
 
-                  <button
-                    className="text-red-500 hover:bg-blue-50 p-2 rounded-md"
-                    title="بن"
-                    // onClick={() => setDeletingProduct(product)}
-                  >
-                    <BiTrash />
-                  </button>
-                </TableCell>
-              </TableRow>
-            );
-          })}
-      </TableBody>
-    </Table>
+                  <TableCell>
+                    <button
+                      className="text-blue-500 hover:bg-blue-50 p-2 rounded-md"
+                      title="ویرایش"
+                    >
+                      <BiPencil />
+                    </button>
+
+                    <button
+                      className="text-red-500 hover:bg-blue-50 p-2 rounded-md"
+                      title="بن"
+                      onClick={() => setbanningUser(user)}
+                    >
+                      <FaBan />
+                    </button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+        </TableBody>
+      </Table>
+
+      <Pagination pagination={pagination} setPage={setPage} page={page} />
+
+      <Confirm
+        isOpen={!!banningUser}
+        title="بن کردن کاربر"
+        description={`آیا از بن کردن کاربر ${banningUser?.name || "ناشناس"} مطمئن هستید؟ این عمل غیر قابل بازگشت است`}
+        onConfirm={handleBan}
+        onCancel={() => setbanningUser(null)}
+        isLoading={isBan}
+      />
+    </>
   );
 };
 
