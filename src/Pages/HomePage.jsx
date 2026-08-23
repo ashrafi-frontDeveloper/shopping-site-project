@@ -8,8 +8,9 @@ const HomePage = () => {
   return (
     <>
       <HeroSection />
-      <BestSelling />
       <LatestProducts />
+      
+      <BestSelling />
       <OfferProducts />
       <SEOSection />
     </>

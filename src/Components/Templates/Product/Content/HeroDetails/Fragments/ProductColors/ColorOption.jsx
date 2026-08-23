@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-const ColorOption = ({color = "#000", label = "مشکی", onSelect}) => {
-    const [selectedColor, setSelectedColor] = useState("#000")
+const ColorOption = ({ color = "#000", label = "مشکی", onSelect }) => {
+  const [selectedColor, setSelectedColor] = useState("#000");
 
-  const handleSelect = (e) => { 
-    const colorCode = (e.target.dataset.color);
-    onSelect?.(colorCode)
+  const handleSelect = (e) => {
+    const colorCode = e.target.dataset.color;
+    onSelect?.(colorCode);
   };
 
   return (
@@ -17,9 +17,7 @@ const ColorOption = ({color = "#000", label = "مشکی", onSelect}) => {
       <div className="size-6  border rounded-md border-slate-200 flex-center">
         <div className="size-4 bg-black rounded-sm"></div>
       </div>
-      <p>
-        {label}
-      </p>
+      <p>{label}</p>
     </div>
   );
 };

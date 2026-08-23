@@ -40,7 +40,14 @@ const CategoryMegaMenu = () => {
                     onMouseEnter={() => setActiveCategory(category)}
                     key={category._id}
                   >
-                    <Link className="flex! items-center! justify-between! gap-2! px-4! py-2.5! text-sm transition-colors">
+                    <Link
+                      to={`category/${category.slug}`}
+                      className={`flex! items-center! justify-between! gap-2! px-4! py-2.5! text-sm transition-colors ${
+                        activeCategory?._id === category._id
+                          ? "bg-blue-50 text-blue-600 font-medium"
+                          : "text-slate-700 hover:bg-slate-50"
+                      }`}
+                    >
                       <span>{category.title}</span>
                       <TbChevronLeft className="text-xs opacity-50" />
                     </Link>
@@ -49,7 +56,40 @@ const CategoryMegaMenu = () => {
               ))}
             </ul>
 
-            {/* Left */}
+            <div className="flex-1! p-6! overflow-y-auto!">
+              {activeCategory.subCategories?.length > 0 ? (
+                <div className="grid! grid-cols-4! gap-x-6! gap-y-4! items-start!">
+                  {activeCategory.subCategories.map((sub) => (
+                    <div key={sub._id} className="flex! flex-col! gap-0!">
+                      <Link
+                        to={`/category/${activeCategory.slug}/${sub.slug}`}
+                        className="flex! items-center! gap-1! text-sm font-bold text-slate-800 hover:text-blue-600 pb-2! mb-2! border-b border-slate-100"
+                      >
+                        <TbChevronLeft className="text-xs" />
+                        <span>{sub.title}</span>
+                      </Link>
+
+                      <ul className="flex! flex-col! gap-1.5!">
+                        {sub.subCategories.map((leaf) => (
+                          <li key={leaf._id}>
+                            <Link
+                              to={`/category/${activeCategory.slug}/${sub.slug}/${leaf.slug}`}
+                              className="text-xs text-slate-500 hover:text-blue-600"
+                            >
+                              {leaf.title}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-zinc-400">
+                  زیردسته‌ای برای این دسته‌بندی وجود ندارد.
+                </p>
+              )}
+            </div>
           </div>
         </div>
       )}

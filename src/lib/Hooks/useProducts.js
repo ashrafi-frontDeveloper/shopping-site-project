@@ -12,15 +12,17 @@ export const useProducts = (limit = 10) => {
     setIsLoading(true);
     setError("");
 
-    try {
-      const res = await getAllProducts({ page, limit });
-      setProducts(res?.data?.products || []);
-      setPagination(res?.data?.pagination || null);
-    } catch (err) {
-      setError("خطا در دریافت محصولات");
-    } finally {
-      setIsLoading(false);
-    }
+    setTimeout(async () => {
+      try {
+        const res = await getAllProducts({ page, limit });
+        setProducts(res?.data?.products || []);
+        setPagination(res?.data?.pagination || null);
+      } catch (err) {
+        setError("خطا در دریافت محصولات");
+      } finally {
+        setIsLoading(false);
+      }
+    }, 2000);
   };
 
   useEffect(() => {

@@ -1,16 +1,101 @@
+import React from "react";
+import { Link } from "react-router";
+import { Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 import ProductCard from "../../../Common/Cards/ProductCard";
 import SectionTitle from "../../../Common/SectionTitle";
+import { useProducts } from "./../../../../lib/Hooks/useProducts";
+import ProductCardSkeleton from "./ProductCardSkeleton";
 
 const LatestProducts = () => {
+  const { products, error, isLoading } = useProducts();
+
   return (
     <section className="container my-[50px]">
-      <SectionTitle text="جدیدترین محصولات" />
-      <div className="mt-10 w-full border rounded-2xl grid grid-cols-5 p-4 border-neutral-300 divide-x divide-neutral-200 gap-5">
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+      <SectionTitle
+        text="جدیدترین محصولات"
+        action={
+          <Link
+            to="/products"
+            className="text-sm text-blue-500 hover:underline"
+          >
+            مشاهده همه محصولات
+          </Link>
+        }
+      />
+      <div className="mt-10 w-full border rounded-2xl p-4 border-neutral-300">
+        {isLoading && (
+          <Swiper slidesPerView={5} spaceBetween={20}>
+            {Array.from({ length: 5 }).map((_, index) => (
+              <SwiperSlide key={index}>
+                <ProductCardSkeleton />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
+
+        {!isLoading && error && (
+          <p className="col-span-5 text-center text-red-500 py-8">{error}</p>
+        )}
+
+        {!isLoading && products.length && (
+          <Swiper
+            slidesPerView={5}
+            spaceBetween={20}
+            loop
+            modules={[Autoplay]}
+            autoplay={{
+              delay: 2000,
+              disableOnInteraction: false,
+            }}
+            breakpoints={{
+              640: {
+                slidesPerView: 2,
+              },
+              768: {
+                slidesPerView: 3,
+              },
+              1024: {
+                slidesPerView: 5,
+              },
+            }}
+          >
+            {products.map((product) => (
+              <React.Fragment key={product._id}>
+                <SwiperSlide>
+                  <ProductCard {...product} />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <ProductCard {...product} />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <ProductCard {...product} />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <ProductCard {...product} />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <ProductCard {...product} />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <ProductCard {...product} />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <ProductCard {...product} />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <ProductCard {...product} />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <ProductCard {...product} />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <ProductCard {...product} />
+                </SwiperSlide>
+              </React.Fragment>
+            ))}
+          </Swiper>
+        )}
       </div>
     </section>
   );

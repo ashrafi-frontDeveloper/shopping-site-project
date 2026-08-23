@@ -20,6 +20,12 @@ export const getAllProducts = async (params) => {
   return data;
 };
 
+export const getOneProduct = async (slug) => {
+  const { data } = await api.get(`/products/${slug}`);
+
+  return data;
+};
+
 export const removeProduct = async (id) => {
   const { data } = await api.delete(`/products/${id}`);
 
