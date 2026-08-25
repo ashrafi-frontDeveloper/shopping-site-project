@@ -1,7 +1,8 @@
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import { toast } from "sonner";
 import AuthContext from "../../context/AuthContext";
+import { isSafeRedirect } from "../helpers/url";
 import * as authService from "./../../services/auth.service";
 import { sendOtpSchema, verifyOtpSchema } from "./../../validators/auth";
 import { validate } from "./../../validators/index";
@@ -14,6 +15,8 @@ export const useAuth = () => {
   const { restart, getFormattedTime, isExpired } = useCountdown(120);
   const navigate = useNavigate();
   const { refreshUser } = useContext(AuthContext);
+
+  const [searchParams] = useSearchParams();
 
   const handlePhoneChange = (e) => {
     setPhone(e.target.value);
@@ -64,7 +67,9 @@ export const useAuth = () => {
 
     toast.success("با موفقیت وارد شدید.");
 
-    navigate("/");
+    // navigate("/");
+    const redirectTo = searchParams.get("redirect");
+    navigate(isSafeRedirect(redirectTo) ? redirectTo : "/");
 
     await refreshUser();
   };

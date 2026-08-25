@@ -22,7 +22,7 @@ const ProductPage = () => {
         <HeroDetails {...product} image={product?.images[0]} />
         <Description {...product} />
         <RelatedProducts {...product} />
-        <ProductComments {...product} />
+        <ProductComments productId={product?._id} {...product} />
       </section>
 
       <Sidebar

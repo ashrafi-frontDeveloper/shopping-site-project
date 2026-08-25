@@ -2,7 +2,7 @@ import Comment from "../../../../Common/Cards/Comment";
 import AiOverview from "./Fragments/AiOverview";
 import CreateComment from "./Fragments/CreateComment";
 
-const ProductComments = () => {
+const ProductComments = ({ productId }) => {
   return (
     <section id="product-comments" className="space-y-8">
       <h4 className="text-lg text-slate-700 font-black">نظرات کاربران</h4>
@@ -12,8 +12,7 @@ const ProductComments = () => {
         id="comments-container"
         className="grid grid-cols-8 *:w-full gap-5 *:p-4"
       >
-        {/* New Comment */}
-        <CreateComment />
+        <CreateComment productId={productId} />
 
         <div className="col-span-5 ">
           {/* All Comments */}
