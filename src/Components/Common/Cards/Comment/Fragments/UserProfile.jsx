@@ -1,7 +1,4 @@
-const UserProfile = ({
-  name = "کاربر ناشناس",
-  email = "example@sabzlearn.ir",
-}) => {
+const UserProfile = ({ name, roles }) => {
   return (
     <div className="flex-ic gap-1.5">
       <img
@@ -11,9 +8,13 @@ const UserProfile = ({
       />
       <div className="space-y-0.5 ">
         <p className="text-xs text-slate-700">
-          <strong>{name}</strong>
+          <strong>{name || "کاربر شاپینو"}</strong>
         </p>
-        <p className="text-xs text-slate-400 select-none font-light">{email}</p>
+        <p className="text-xs text-slate-400 select-none font-light">
+          {roles.includes("ADMIN") || roles.includes("SELLER")
+            ? "فروشنده"
+            : "کاربر"}
+        </p>
       </div>
     </div>
   );
