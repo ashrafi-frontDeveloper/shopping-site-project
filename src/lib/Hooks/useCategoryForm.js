@@ -16,8 +16,6 @@ export const useCategoryForm = (onSuccess) => {
     formData.append("filters", JSON.stringify(filters));
     iconFile && formData.append("iconFile", iconFile);
 
-    console.log([...formData.entries()]);
-
     try {
       await createCategory(formData);
       onSuccess();

@@ -11,8 +11,6 @@ const ProductPage = () => {
 
   const { product, isLoading, error } = useProduct(productSlug);
 
-  console.log(product);
-
   return (
     <main
       id="product-content"
@@ -26,6 +24,7 @@ const ProductPage = () => {
       </section>
 
       <Sidebar
+        product={product}
         image={product?.images[0]}
         sellers={product?.sellers}
         name={product?.name}

@@ -1,8 +1,6 @@
 import Variant from "./Variant";
 
 const ProductVariants = ({ fields }) => {
-  console.log(Object.entries(fields || {}));
-
   return (
     <div className="space-y-3">
       <p className="text-xs font-black text-slate-600">ویژگی‌ها:</p>

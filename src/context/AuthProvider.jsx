@@ -28,8 +28,6 @@ const AuthProvider = ({ children }) => {
     try {
       setIsLoading(true);
       const response = await AuthService.logout();
-
-      console.log(response);
     } catch (err) {
       console.log(`[Logout] ->`, err);
     } finally {

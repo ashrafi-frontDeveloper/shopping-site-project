@@ -31,8 +31,6 @@ export const useAuth = () => {
 
     const data = await authService.sendOtp(phone);
 
-    console.log("[SendOtp]", data);
-
     setIsSentOtp(true);
 
     restart();
@@ -40,8 +38,6 @@ export const useAuth = () => {
 
   const resendOtp = async () => {
     const data = await authService.sendOtp(phone);
-
-    console.log("[ResendOtp]", data);
 
     restart();
 
@@ -52,8 +48,6 @@ export const useAuth = () => {
     if (!validate(verifyOtpSchema, { phone, otp })) return;
 
     const data = await authService.verifyOtp(phone, otp);
-
-    console.log("[VerifyOtp]", data);
 
     return data;
   };
