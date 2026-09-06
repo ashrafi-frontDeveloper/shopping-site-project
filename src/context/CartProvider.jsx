@@ -11,10 +11,21 @@ import {
 import {
   addToServerCart,
   getServerCart,
+  removeServerCartItem,
   updateServerCartItem,
 } from "../services/cart.service";
 import AuthContext from "./AuthContext";
 import CartContext from "./CartContext";
+
+const normalizeServerItem = (item) => ({
+  productId: item.product?._id,
+  sellerId: item.seller?._id,
+  quantity: item.quantity,
+  name: item.product?.name,
+  slug: item.product?.slug,
+  image: item.product?.images?.[0],
+  price: item.discountedPrice ?? item.originalPrice,
+});
 
 const CartProvider = ({ children }) => {
   const { user, isLoading: authIsLoading } = useContext(AuthContext);
@@ -27,7 +38,7 @@ const CartProvider = ({ children }) => {
       const response = await getServerCart();
       const cart = response?.data?.cart;
 
-      setItems(cart.items);
+      setItems((cart.items || []).map(normalizeServerItem));
     } catch (err) {
       if (err?.response?.status === 404) {
         setItems([]);
@@ -71,7 +82,7 @@ const CartProvider = ({ children }) => {
 
       if (user) {
         await mergeGuestCartIntoServer();
-        await fetchServerCart;
+        await fetchServerCart();
       } else {
         setItems(getGuestCartItems());
       }
@@ -91,7 +102,7 @@ const CartProvider = ({ children }) => {
           quantity: item.quantity,
         });
 
-        setItems(response?.data?.cart?.items || []);
+        await fetchServerCart();
       } catch (err) {
         toast.error("خطا در افزودن به سبد خرید");
       }
@@ -109,9 +120,13 @@ const CartProvider = ({ children }) => {
           quantity,
         });
 
-        setItems(response?.data?.cart?.items || []);
+        await fetchServerCart();
       } catch (err) {
-        toast.error("خطا در بروزرسانی سبد خرید");
+        if (err.status === 400) {
+          return toast.error("تعداد انتخابی بیش از موجودی می‌باشد");
+        }
+
+        return toast.error("خطا در بروزرسانی سبد خرید");
       }
     } else {
       setItems(updateGuestCartItem(productId, sellerId, quantity));
@@ -122,12 +137,31 @@ const CartProvider = ({ children }) => {
     if (user) {
       try {
         const response = await removeServerCartItem({ productId, sellerId });
-        setItems(response?.data?.cart?.items || []);
+        await fetchServerCart();
       } catch (err) {
         toast.error("خطادر حذف محصول از سبد");
       }
     } else {
       setItems(removeGuestCartItem(productId, sellerId));
+    }
+  };
+
+  const clearCart = async () => {
+    if (user) {
+      try {
+        for (const item of items) {
+          await removeServerCartItem({
+            productId: item.productId,
+            sellerId: item.sellerId,
+          });
+        }
+
+        await fetchServerCart();
+      } catch (err) {
+        toast.error("خطا در خالی کردن سبد خرید");
+      }
+    } else {
+      setItems(clearGuestCart());
     }
   };
 
@@ -140,6 +174,7 @@ const CartProvider = ({ children }) => {
     addItem,
     updateItem,
     removeItem,
+    clearCart,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

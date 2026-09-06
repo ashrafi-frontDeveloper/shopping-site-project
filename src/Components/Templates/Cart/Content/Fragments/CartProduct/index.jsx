@@ -1,19 +1,46 @@
-import React from "react";
+import { useContext, useState } from "react";
+import CartContext from "../../../../../../context/CartContext";
+import Entity from "./Elements/Entity";
 import Title from "./Elements/Title";
 import Variants from "./Elements/Variants";
-import Entity from "./Elements/Entity";
 
-const CartProduct = () => {
+const IMAGE_BASE_URL = "https://shopino.iran.liara.run/images/products/";
+
+const CartProduct = ({
+  sellerId,
+  productId,
+  image,
+  name,
+  slug,
+  quantity,
+  price,
+}) => {
+  const { updateItem } = useContext(CartContext);
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  const handleQuantituChange = async (newQuantity) => {
+    if (newQuantity < 0) return;
+
+    setIsUpdating(true);
+
+    try {
+      await updateItem(productId, sellerId, newQuantity);
+    } catch {
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
   return (
     <article className="w-full p-8 border rounded-xl border-slate-200  flex flex-col justify-between h-[414px]">
       <div className="w-full grid grid-cols-2 gap-4">
         <div className="space-y-5">
-          <Title text="مانیتور گیمینگ کولر مستر مدل GA2711 سایز 27 اینچ" />
+          <Title text={name} />
           <Variants />
         </div>
         <div className="flex-center">
           <img
-            src="/assets/static/product1.png"
+            src={`${IMAGE_BASE_URL}/${image}`}
             alt="Product"
             className="max-h-[168px]"
           />
@@ -21,20 +48,20 @@ const CartProduct = () => {
       </div>
 
       <div className="w-full flex-between px-10 h-20 rounded-xl border border-slate-200 bg-slate-50">
+        <Entity
+          isUpdating={isUpdating}
+          count={quantity}
+          onCountChange={handleQuantituChange}
+        />
 
-        {/* Product Entity  */}
-        <Entity count={1} onCountChange={() => {}} />
-
-        {/* Product Price */}
         <div>
           <div className="flex-ic gap-1">
             <p className="text-xl">
-              <strong>{Number(15_000_000).toLocaleString("fa-IR")}</strong>
+              <strong>{Number(price).toLocaleString("fa-IR")}</strong>
             </p>
             <span>تومان</span>
           </div>
         </div>
-      
       </div>
     </article>
   );

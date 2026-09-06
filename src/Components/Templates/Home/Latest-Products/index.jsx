@@ -68,30 +68,6 @@ const LatestProducts = () => {
                 <SwiperSlide>
                   <ProductCard {...product} />
                 </SwiperSlide>
-                <SwiperSlide>
-                  <ProductCard {...product} />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <ProductCard {...product} />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <ProductCard {...product} />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <ProductCard {...product} />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <ProductCard {...product} />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <ProductCard {...product} />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <ProductCard {...product} />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <ProductCard {...product} />
-                </SwiperSlide>
               </React.Fragment>
             ))}
           </Swiper>

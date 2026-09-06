@@ -25,7 +25,8 @@ const CreateComment = ({ productId }) => {
       toast.error("برای ثبت کامنت باید لاگین کنید", {
         action: {
           label: "ورود به حساب",
-          onClick: () => navigate(`/auth?redirect=${location.pathname}`),
+          onClick: () =>
+            navigate(`/auth?redirect=${encodeURIComponent(location.pathname)}`),
         },
       });
     }

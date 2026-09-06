@@ -4,6 +4,7 @@ import AboutUSPage from "../Pages/AboutUS.jsx";
 import AuthPage from "../Pages/Auth.jsx";
 import BlogPage from "../Pages/Blog.jsx";
 import CartPage from "../Pages/Cart.jsx";
+import CheckoutPage from "../Pages/Checkout.jsx";
 import ContactUSPage from "../Pages/ContactUS.jsx";
 import HomePage from "../Pages/HomePage.jsx";
 import ProductPage from "../Pages/Product.jsx";
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
       { path: "about-us", element: <AboutUSPage /> },
       { path: "contact-us", element: <ContactUSPage /> },
       { path: "cart", element: <CartPage /> },
+      { path: "checkout", element: <CheckoutPage /> },
       { path: "product/:productSlug", element: <ProductPage /> },
       { path: "blog/:blogID", element: <BlogPage /> },
 

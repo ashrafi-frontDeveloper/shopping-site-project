@@ -19,7 +19,7 @@ export const updateServerCartItem = async (body) => {
 };
 
 export const removeServerCartItem = async (body) => {
-  const { data } = await api.delete("/cart/remove", body);
+  const { data } = await api.post("/cart/remove", body);
 
   return data;
 };
